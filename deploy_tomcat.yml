@@ -2,7 +2,7 @@
 - hosts: websever
   become: yes
   vars:
-    build_number: '{{ url_artifact }}'
+    build_number: "{{ url_artifact }}"
   #become_user: tomcat
   tasks:
 
@@ -14,7 +14,7 @@
 
   - name: download war file
     ansible.builtin.get_url:
-      url: {{ build_number }}
+      url: "{{ build_number }}"
       dest: /home/ubuntu/sourcefile/webapp.war
       username: siddeshg672@gmail.com
       password: Siddesh@123456
