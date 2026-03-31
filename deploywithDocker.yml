@@ -2,19 +2,19 @@
 - hosts: websever
   become: yes
   vars:
-    build_number: '{{ BUILD_NUMBER }}'
+    build_number: "{{ build_number }}"
   tasks:
       
     - name: login to jfrog
-      shell: docker login -u siddeshg672@gmail.com -p Siddesh@123456 hiqodenew.jfrog.io  
+      shell: docker login -u siddeshgowda@hiqode.in -p Siddesh@123 trialtypobk.jfrog.io  
     
     - name: pull an image
-      shell: docker pull hiqodenew.jfrog.io/sample-war-app/sample_docker_image_with_war_deploy:v1.0-{{ build_number }}
+      shell: docker pull trialtypobk.jfrog.io/testapp/sampledockeruplaod:v.1.0.1-{{ build_number }}
 
-    - name: remove container
-      shell: docker rm -f devopsAppDeploy
+    #- name: remove container
+     # shell: docker rm -f devopsAppDeploy
         
     - name: create a application container
-      shell: docker run -id --name devopsAppDeploy -p 8111:8080 hiqodenew.jfrog.io/sample-war-app/sample_docker_image_with_war_deploy:v1.0-{{ build_number }}
+      shell: docker run -id --name devopsAppDeploy -p 8111:8080 trialtypobk.jfrog.io/testapp/sampledockeruplaod:v.1.0.1-{{ build_number }}
  
    
