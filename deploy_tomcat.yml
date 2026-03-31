@@ -2,7 +2,7 @@
 - hosts: websever
   become: yes
   vars:
-    build_number: '{{ BUILD_NUMBER }}'
+    build_number: '{{ url_artifact }}'
   #become_user: tomcat
   tasks:
 
@@ -14,7 +14,7 @@
 
   - name: download war file
     ansible.builtin.get_url:
-      url: https://hiqodenew.jfrog.io/artifactory/hiqode-tomcat-app-ma-generic-local/webapp-{{ build_number }}.war
+      url: {{ build_number }}
       dest: /home/ubuntu/sourcefile/webapp.war
       username: siddeshg672@gmail.com
       password: Siddesh@123456
