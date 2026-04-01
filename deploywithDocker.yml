@@ -11,8 +11,8 @@
     - name: pull an image
       shell: docker pull trialtypobk.jfrog.io/testapp/sampledockeruplaod:v.1.0.1-{{ build_number }}
 
-    #- name: remove container
-     # shell: docker rm -f devopsAppDeploy
+    - name: remove container
+      shell: docker rm -f devopsAppDeploy
         
     - name: create a application container
       shell: docker run -id --name devopsAppDeploy -p 8111:8080 trialtypobk.jfrog.io/testapp/sampledockeruplaod:v.1.0.1-{{ build_number }}
