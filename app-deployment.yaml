@@ -32,6 +32,6 @@ spec:
     spec:
       containers:
       - name: devopsapp
-        image: image_name
+        image: jfrog2026.jfrog.io/imagedeploy/jenkimage:latest
         ports:
         - containerPort: 8080
