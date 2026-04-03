@@ -1,20 +1,18 @@
 ---
 - hosts: websever
   become: yes
-  vars:
-    build_number: "{{ build_number }}"
   tasks:
       
     - name: login to jfrog
-      shell: docker login -u siddeshgowda@hiqode.in -p Siddesh@123 trialtypobk.jfrog.io  
+      shell: docker login -u ssuresh@agile1.com -p Hiqode@272311 jfrog2026.jfrog.io 
     
     - name: pull an image
-      shell: docker pull trialtypobk.jfrog.io/testapp/sampledockeruplaod:v.1.0.1-{{ build_number }}
+      shell: docker pull jfrog2026.jfrog.io/imagedeploy/dockeransi:latest
 
     - name: remove container
       shell: docker rm -f devopsAppDeploy
         
     - name: create a application container
-      shell: docker run -id --name devopsAppDeploy -p 8111:8080 trialtypobk.jfrog.io/testapp/sampledockeruplaod:v.1.0.1-{{ build_number }}
+      shell: docker run -id --name devopsAppDeploy -p 8111:8080 jfrog2026.jfrog.io/imagedeploy/dockeransi:latest
  
    
