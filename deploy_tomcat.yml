@@ -1,8 +1,6 @@
 ---
 - hosts: websever
   become: yes
-  vars:
-    build_number: "{{ url_artifact }}"
   #become_user: tomcat
   tasks:
 
@@ -14,10 +12,10 @@
 
   - name: download war file
     ansible.builtin.get_url:
-      url: "{{ build_number }}"
+      url: "{{ url_artifact }}"
       dest: /home/ubuntu/sourcefile/webapp.war
-      username: siddeshgowda@hiqode.in
-      password: Siddesh@123
+      username: ssuresh@agile1.com
+      password: Hiqode@272311
 
   - name: create directory for backup
     file: 
