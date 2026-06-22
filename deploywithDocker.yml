@@ -15,6 +15,6 @@
       shell: docker rm -f devopsAppDeploy
         
     - name: create a application container
-      shell: docker run -id --name devopsAppDeploy -p 9999:8080 hiqode01.jfrog.io/tomcat-war-deploy/sample_docker_image_createion:V-1.0.0-{{ build_number }}
+      shell: docker run -id --name devopsAppDeploy -p 9999:8080 hiqode01.jfrog.io/tomcat-war-deploy/shimage:v1-{{ build_number }}
  
    
