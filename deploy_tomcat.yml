@@ -3,41 +3,48 @@
   become: yes
   vars:
     build_number: "{{ url_artifact }}"
-  #become_user: tomcat
+
   tasks:
 
-  - name: create directory 
-    file:
-      path: /home/ubuntu/sourcefile
-      state: directory
-      mode: 0777
+    - name: Create source directory
+      file:
+        path: /home/ubuntu/sourcefile
+        state: directory
+        mode: '0777'
 
-  - name: download war file
-    ansible.builtin.get_url:
-      url: "{{ build_number }}"
-      dest: /home/ubuntu/sourcefile/webapp.war
-      username: siddeshgowda@hiqode.in
-      password: Siddu@9880
+    - name: Download war file from JFrog
+      ansible.builtin.get_url:
+        url: "{{ build_number }}"
+        dest: /home/ubuntu/sourcefile/webapp.war
+        username: siddeshgowda@hiqode.in
+        password: Siddu@9880
 
-  - name: create directory for backup
-    file: 
-      path: /home/ubuntu/backup
-      state: directory
-      mode: 0777
+    - name: Create backup directory
+      file:
+        path: /home/ubuntu/backup
+        state: directory
+        mode: '0777'
 
-  - name: backup file with owner and permissions
-    copy:
-      src: /opt/tomcat/webapps/webapp.war
-      dest: /home/ubuntu/backup/webapp.war
-      remote_src: yes
+    - name: Check if old war exists
+      stat:
+        path: /opt/tomcat/webapps/webapp.war
+      register: war_status
 
-  - name: Delete remote war file
-    file:
-      path: /opt/tomcat/webapps/webapp.war
-      state: absent
+    - name: Backup old war file
+      copy:
+        src: /opt/tomcat/webapps/webapp.war
+        dest: /home/ubuntu/backup/webapp.war
+        remote_src: yes
+      when: war_status.stat.exists
 
-  - name: deploy file with owner and permissions
-    copy:
-      src: /home/ubuntu/sourcefile/webapp.war
-      dest: /opt/tomcat/webapps/webapp.war
-      remote_src: yes
+    - name: Delete old war file
+      file:
+        path: /opt/tomcat/webapps/webapp.war
+        state: absent
+      when: war_status.stat.exists
+
+    - name: Deploy new war file
+      copy:
+        src: /home/ubuntu/sourcefile/webapp.war
+        dest: /opt/tomcat/webapps/webapp.war
+        remote_src: yes
