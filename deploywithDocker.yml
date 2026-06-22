@@ -15,6 +15,6 @@
       shell: docker rm -f devopsAppDeploy
         
     - name: create a application container
-      shell: docker run -id --name devopsAppDeploy -p 9999:8080 hiqode01.jfrog.io/shakunthala-docker/shimage:v1-{{ build_number }}
+      shell: docker run -id --name devopsAppDeploy -p 9009:8080 hiqode01.jfrog.io/shakunthala-docker/shimage:v1-{{ build_number }}
  
    
