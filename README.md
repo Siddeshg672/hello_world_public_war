@@ -1,2 +1,1 @@
 Simple Maven Project
-commit
