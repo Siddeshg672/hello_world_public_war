@@ -1,0 +1,44 @@
+---
+- hosts: websever
+  become: yes
+  vars:
+    build_number: '{{ BUILD_NUMBER }}'
+    micro_service: '{{ ms }}'
+  #become_user: tomcat
+  tasks:
+
+  - name: create directory 
+    file:
+      path: /home/ubuntu/sourcefile
+      state: directory
+      mode: 0777
+
+  - name: download war file
+    ansible.builtin.get_url:
+      url: https://hiqode.jfrog.io/artifactory/cicd-war-generic-local/app-a/{{ micro_service }}/{{ micro_service }}-webapp-{{ build_number }}.war
+      dest: /home/ubuntu/sourcefile/webapp.war
+      username: shsdocuments5@gmail.com
+      password: Hiqode@123
+
+  - name: create directory with a date in name
+    file: 
+      path: /home/ubuntu/backup
+      state: directory
+      mode: 0777
+
+  - name: backup file with owner and permissions
+    copy:
+      src: /opt/tomcat/webapps/webapp.war
+      dest: /home/ubuntu/backup/webapp.war
+      remote_src: yes
+
+  - name: Delete remote war file
+    file:
+      path: /opt/tomcat/webapps/webapp.war
+      state: absent
+
+  - name: deploy file with owner and permissions
+    copy:
+      src: /home/ubuntu/sourcefile/webapp.war
+      dest: /opt/tomcat/webapps/webapp.war
+      remote_src: yes

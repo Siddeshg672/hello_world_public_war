@@ -1,26 +1,27 @@
-pipeline {
+pipeline{
     agent any
-    environment {
-        PATH = "/opt/apache-maven-3.6.3/bin:$PATH"
+    tools {
+        // Install the Maven version configured as "M3" and add it to the path.
+        maven "maven_3.9.9"
     }
-    stages {
-        stage("clone code"){
-            steps{
-               git credentialsId: 'git_credentials', url: 'https://github.com/ravdy/hello-world.git'
-            }
+    stages{
+        stage('checkout'){
+           steps{
+               git branch: 'main', url: 'https://github.com/Siddeshg672/hello_world_public_war.git'
+           } 
         }
-        stage("build code"){
+        
+        stage('create binaries'){
             steps{
-              sh "mvn clean install"
-            }
-        }
-        stage("deploy"){
-            steps{
-              sshagent(['deploy_user']) {
-                 sh "scp -o StrictHostKeyChecking=no webapp/target/webapp.war ec2-user@13.229.183.126:/opt/apache-tomcat-8.5.55/webapps"
-                 
+                 sh "mvn clean install"
                 }
-            }
         }
+        // stage('create docker image'){
+        //     steps{
+        //         sh "docker build -t siddeshg672/devopsapp:latest ."
+        //         sh "docker tag siddeshg672/devopsapp:latest siddeshg672/devopsapp:test-deploy_${BUILD_NUMBER}"
+        //         sh "docker push siddeshg672/devopsapp:test-deploy_${BUILD_NUMBER}"
+        //     }
+        // }
     }
 }

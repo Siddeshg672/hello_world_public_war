@@ -1,0 +1,20 @@
+---
+- hosts: websever
+  become: yes
+  vars:
+    build_number: "{{ build_number }}"
+  tasks:
+      
+    - name: login to jfrog
+      shell: docker login -u siddeshgowda@hiqode.in -p Siddu@9880 hiqode01.jfrog.io 
+    
+    - name: pull an image
+      shell: docker pull hiqode01.jfrog.io/tomcat-war-deploy/sample_docker_image_createion:V-1.0.0-{{ build_number }}
+
+    - name: remove container
+      shell: docker rm -f devopsAppDeploy
+        
+    - name: create a application container
+      shell: docker run -id --name devopsAppDeploy -p 9999:8080 hiqode01.jfrog.io/tomcat-war-deploy/sample_docker_image_createion:V-1.0.0-{{ build_number }}
+ 
+   

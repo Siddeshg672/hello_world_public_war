@@ -1,0 +1,27 @@
+---
+- hosts: websever
+  tasks:
+      
+    - name: Log into jfrog
+      docker_login:
+        registry: shstechacademy.jfrog.io
+        username: devops6789@gmail.com
+        password: Siddu@9880
+        
+    - name: pull an image
+      docker_image:
+        name: "shstechacademy.jfrog.io/sampledockeruplaod/newimage:31"
+        source: pull
+
+    - name: remove container
+      docker_container:
+        name: devopsAppDeploy
+        state: absent
+        
+    - name: create a application container
+      docker_container:
+        name: devopsAppDeploy
+        image: "shstechacademy.jfrog.io/sampledockeruplaod/newimage:31"
+        state: started
+        ports:
+          - "8111:8080"
