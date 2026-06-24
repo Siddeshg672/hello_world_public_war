@@ -9,12 +9,12 @@
       shell: docker login -u siddeshgowda@hiqode.in -p Siddu@9880 hiqode01.jfrog.io 
     
     - name: pull an image
-      shell: docker pull hiqode01.jfrog.io/tomcat-war-deploy/sample_docker_image_createion:V-1.0.0-{{ build_number }}
+      shell: docker pull hiqode01.jfrog.io/shakunthala-docker/shimage:v1-{{ build_number }}
 
     - name: remove container
       shell: docker rm -f devopsAppDeploy
         
     - name: create a application container
-      shell: docker run -id --name devopsAppDeploy -p 9999:8080 hiqode01.jfrog.io/tomcat-war-deploy/sample_docker_image_createion:V-1.0.0-{{ build_number }}
+      shell: docker run -id --name devopsAppDeploy -p 9009:8080 hiqode01.jfrog.io/shakunthala-docker/shimage:v1-{{ build_number }}
  
    
