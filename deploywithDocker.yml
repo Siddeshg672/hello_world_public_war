@@ -11,8 +11,8 @@
     - name: pull an image
       shell: docker pull hiqodeinnovations.jfrog.io/dockerimageappa/app_a:v1.0.{{ build_number }}
 
-    #- name: remove container
-     # shell: docker rm -f devopsAppDeploy
+    - name: remove container
+      shell: docker rm -f devopsAppDeploy
         
     - name: create a application container
       shell: docker run -id --name devopsAppDeploy -p 9999:8080 hiqodeinnovations.jfrog.io/dockerimageappa/app_a:v1.0.{{ build_number }}
